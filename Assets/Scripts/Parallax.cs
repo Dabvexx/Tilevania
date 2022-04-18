@@ -11,10 +11,14 @@ public class Parallax : MonoBehaviour
     #region Variables
     // Variables.
     private float length;
-    private float startPos;
-    public GameObject cam;
+    private float startPosX;
+    private float startPosY;
+    private GameObject cam;
+    
     public float horizontalParallaxEffect;
 
+    [Header("Vertical Scrolling Variables")]
+    public bool isVerticallyScrolling = false;
     public float verticalParallaxEffect;
     public float minVerticalScroll;
     public float maxVerticalScroll;
@@ -25,13 +29,18 @@ public class Parallax : MonoBehaviour
     void Start()
     {
         cam = Camera.main.gameObject;
-        startPos = transform.position.x;
+        startPosX = transform.position.x;
+        startPosY = transform.position.y;
         length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
     void FixedUpdate()
     {
         HorizonalParallax();
+        if (isVerticallyScrolling)
+        {
+            VerticalScrolling();
+        }
     }
 
     #endregion
@@ -40,9 +49,10 @@ public class Parallax : MonoBehaviour
 
     private void HorizonalParallax()
     {
-        float dist = (cam.transform.position.x * horizontalParallaxEffect);
+        float distX = (cam.transform.position.x * horizontalParallaxEffect);
 
-        transform.position = new Vector3(startPos + dist, transform.position.y, transform.position.z);
+        // Offset from original starting position
+        transform.position = new Vector3(startPosX + distX, transform.position.y, transform.position.z);
         HorizontalLoop();
     }
 
@@ -50,13 +60,36 @@ public class Parallax : MonoBehaviour
     {
         float temp = (cam.transform.position.x * (1 - horizontalParallaxEffect));
 
-        if (temp > startPos + length) startPos += length;
-        else if (temp < startPos - length) startPos -= length;
+        if (temp > startPosX + length) startPosX += length;
+        else if (temp < startPosX - length) startPosX -= length;
     }
 
     private void VerticalScrolling()
     {
-        float dist = (cam.transform.position.y * verticalParallaxEffect);
+        // Currently this doesnt do anything.
+        // I tried to use the offset code for the vertical access
+        // However, its actually just moving as the camera moves and being constrained
+
+        float distY = (cam.transform.position.y * verticalParallaxEffect);
+
+        transform.position = new Vector3(transform.position.x, startPosY  + distY, transform.position.z);
+
+        // Constrain the height offset.
+        //Mathf.Clamp(transform.localPosition.y, minVerticalScroll, maxVerticalScroll);
+        ConstrainVerticalAxis();
+    }
+
+    private void ConstrainVerticalAxis()
+    {
+        if (transform.localPosition.y < minVerticalScroll)
+        {
+            transform.localPosition = new Vector3(transform.localPosition.x, minVerticalScroll, transform.localPosition.z);
+        }
+        else if (transform.localPosition.y > maxVerticalScroll)
+        {
+            transform.localPosition = new Vector3(transform.localPosition.x, maxVerticalScroll, transform.localPosition.z);
+        }
+
     }
     #endregion Private Methods
 }
