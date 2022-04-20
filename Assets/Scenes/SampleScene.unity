@@ -155,7 +155,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -3911,7 +3911,7 @@ GameObject:
   - component: {fileID: 1789063882}
   - component: {fileID: 1789063884}
   m_Layer: 7
-  m_Name: Square
+  m_Name: SemiSolid
   m_TagString: Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4030,7 +4030,7 @@ MonoBehaviour:
   maxJumpHeight: 4
   minJumpHeight: 1
   timeToJumpApex: 0.4
-  moveSpeed: 5
+  moveSpeed: 10
   wallJumpClimb: {x: 0, y: 0}
   wallJumpOff: {x: 0, y: 0}
   wallLeap: {x: 0, y: 0}
