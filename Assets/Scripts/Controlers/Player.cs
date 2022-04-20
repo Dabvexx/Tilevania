@@ -5,7 +5,8 @@ public class Player : MonoBehaviour
 {
     #region Variables
 
-    public float jumpHeight = 4f;
+    public float maxJumpHeight = 4f;
+    public float minJumpHeight = 1f;
     public float timeToJumpApex = .4f;
     private float accelerationTimeAirborne = .2f;
     private float accelerationTimeGrounded = .1f;
@@ -20,7 +21,8 @@ public class Player : MonoBehaviour
     float timeToWallUnstick;
 
     private float gravity;
-    private float jumpVelocity;
+    float maxJumpVelocity;
+    float minJumpVelocity;
 
     private Vector3 velocity;
     private float velocityXSmoothing;
@@ -35,8 +37,11 @@ public class Player : MonoBehaviour
     {
         controller = GetComponent<Controller2D>();
 
-        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
-        jumpVelocity = Mathf.Abs(gravity * timeToJumpApex);
+        gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        maxJumpVelocity = Mathf.Abs(gravity * timeToJumpApex);
+        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+
+        Debug.Log($"Gravity: {gravity} Jump Velocity: {maxJumpVelocity}");
     }
 
     private void Update()
@@ -77,11 +82,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (controller.collisions.above || controller.collisions.below)
-        {
-            velocity.y = 0;
-        }
-
         if (Input.GetButtonDown("Jump"))
         {
             if (wallSliding)
@@ -106,12 +106,27 @@ public class Player : MonoBehaviour
             if (controller.collisions.below)
             {
                 //Debug.Log("pressed");
-                velocity.y = jumpVelocity;
+                velocity.y = maxJumpVelocity;
+            }
+        }
+
+        // Halt momentum when letting go of space.
+        if (Input.GetButtonUp("Jump"))
+        {
+            if (velocity.y > minJumpVelocity)
+            {
+                velocity.y = minJumpVelocity;
             }
         }
 
         velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime, input);
+
+        // Bonk, cancel vertical velocity
+        if (controller.collisions.above || controller.collisions.below)
+        {
+            velocity.y = 0;
+        }
     }
 
     #endregion Unity Methods

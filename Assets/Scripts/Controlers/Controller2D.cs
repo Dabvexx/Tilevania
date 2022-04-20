@@ -7,6 +7,7 @@ public class Controller2D : RayCastController
     private float maxDescendAngle = 85;
 
     public CollisionInfo collisions;
+    Vector2 playerInput;
 
     public override void Start()
     {
@@ -16,11 +17,16 @@ public class Controller2D : RayCastController
 
     #region Methods
 
-    public void Move(Vector3 velocity, bool standingOnPlatform = false)
+    public void Move(Vector3 velocity, bool standingOnPlatform)
+    {
+        Move(velocity, Vector2.zero, standingOnPlatform);
+    }
+    public void Move(Vector3 velocity, Vector2 input, bool standingOnPlatform = false)
     {
         updateRayCastOrigins();
         collisions.Reset();
         collisions.velocityOld = velocity;
+        playerInput = input;
 
         if(velocity.x != 0)
         {
@@ -126,6 +132,28 @@ public class Controller2D : RayCastController
 
             if (hit)
             {
+                if (hit.collider.tag == "Through")
+                {
+                    // Handle platforms you can jump through
+                    if (directionY == 1 || hit.distance == 0)
+                    {
+                        continue;
+                    }
+
+                    if (collisions.fallingThroughtPlatform)
+                    {
+                        continue;
+                    }
+
+                    if (playerInput.y == -1)
+                    {
+                        // Keep acting as if the down key were held for a few frames.
+                        collisions.fallingThroughtPlatform = true;
+                        Invoke("ResetFallingThroughPlatform", .5f);
+                        continue;
+                    }
+                }
+
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 if (Mathf.Abs(velocity.y) <= skinWidth) { velocity.y = 0; }
                 rayLength = hit.distance;
@@ -203,6 +231,11 @@ public class Controller2D : RayCastController
         }
     }
 
+    private void ResetFallingThroughPlatform()
+    {
+        collisions.fallingThroughtPlatform = false;
+    }
+
     #endregion Methods
 
     public struct CollisionInfo
@@ -214,6 +247,7 @@ public class Controller2D : RayCastController
         public float slopeAngle, slopeAngleOld;
         public Vector3 velocityOld;
         public int faceDir;
+        public bool fallingThroughtPlatform;
 
         public void Reset()
         {
