@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAnimeManager : MonoBehaviour
+public class PlayerAnimManager : MonoBehaviour
 {
     #region Variables
     // Variables.
@@ -16,6 +16,7 @@ public class PlayerAnimeManager : MonoBehaviour
     const string PLAYER_RUN = "Run";
     const string PLAYER_ACCEND = "Accending";
     const string PLAYER_DECEND = "Decending";
+    const string PLAYER_DEAD = "Dead";
     #endregion
 
     #region Unity Methods
