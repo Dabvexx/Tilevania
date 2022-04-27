@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MushData))]
 public class MushAnimManager : MonoBehaviour
 {
     #region Variables
@@ -13,8 +12,6 @@ public class MushAnimManager : MonoBehaviour
     [SerializeField] private string currentState;
 
     [SerializeField] private MushAI ai;
-
-    private MushData md;
 
     #endregion Variables
 
@@ -32,7 +29,6 @@ public class MushAnimManager : MonoBehaviour
     private void Start()
     {
         ai = GetComponent<MushAI>();
-        md = GetComponent<MushData>();
         animator = GetComponent<Animator>();
         ChangeAnimationState(MUSH_IDLE);
     }
@@ -51,10 +47,10 @@ public class MushAnimManager : MonoBehaviour
 
     private void HandleAnim()
     {
-        if (!md.isAlive)
+        if (!ai.isAlive)
         {
             ChangeAnimationState(MUSH_DEAD);
-            // Destroy gameobject after playing death animation.
+            return;
         }
 
         if (ai.isWalking)

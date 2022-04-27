@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 3565748208150522050}
   - component: {fileID: 3565748208150522052}
   - component: {fileID: 3565748208150522053}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mush
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -188,4 +188,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   currentState: 
-  AI: {fileID: 0}
+  ai: {fileID: 0}

@@ -9,6 +9,7 @@ public class PlayerAnimManager : MonoBehaviour
     // Variables.
     private Animator animator;
 
+    private bool isAlive = true;
     private string currentState;
     private Vector3 prevPos;
 
@@ -42,12 +43,27 @@ public class PlayerAnimManager : MonoBehaviour
         prevPos = transform.position;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            isAlive = false;
+        }
+    }
+
     #endregion Unity Methods
 
     #region Private Methods
 
     private void HandleAnim(float inputX)
     {
+        // Check if deceseaed (L + Ratio)
+        if (!isAlive)
+        {
+            ChangeAnimationState(PLAYER_DEAD);
+            return;
+        }
+
         // Check if accending.
         if (transform.position.y > prevPos.y)
         {

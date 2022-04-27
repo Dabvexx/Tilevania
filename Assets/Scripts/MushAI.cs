@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MushData))]
 public class MushAI : MonoBehaviour
 {
     #region Variables
@@ -12,11 +11,15 @@ public class MushAI : MonoBehaviour
     [SerializeField] private float walkTimer;
     [SerializeField] private float walkTime;
     public bool isWalking;
+    public bool isAlive = true;
     public int walkDirection;
     private Rigidbody2D rb;
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float walkChance = 1f;
-    private MushData md;
+
+    // Wanted to do delegates, just refrence the script directly 4head
+    // public delegate void DeathDelegate();
+    //public event DeathDelegate deathEvent;
 
     #endregion Variables
 
@@ -25,13 +28,19 @@ public class MushAI : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        md = GetComponent<MushData>();
     }
 
     private void Update()
     {
-        // TODO: Just reset to idle after being hit.
         Move();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            Die();
+        }
     }
 
     #endregion Unity Methods
@@ -52,7 +61,6 @@ public class MushAI : MonoBehaviour
         }
 
         // Randomly decide to move or not.
-
         if (Random.Range(1, walkChance * 1000) < 2)
         {
             isWalking = true;
@@ -60,11 +68,6 @@ public class MushAI : MonoBehaviour
 
             walkDirection = Random.Range(1, 21) > 10 ? -1 : 1;
         }
-    }
-
-    private void Hurt(int damage)
-    {
-        md.health -= damage;
     }
 
     private void DecrementTimer()
@@ -78,11 +81,28 @@ public class MushAI : MonoBehaviour
         walkTimer -= Time.deltaTime;
     }
 
+    private void Die()
+    {
+        // Haha funni death event delegate.
+        // A little too much tomfoolery.
+
+        //if (deathEvent != null)
+        //{
+        //    deathEvent();
+        //}
+
+        isAlive = false;
+    }
+
     #endregion Private Methods
 
     #region Public Methods
 
     // Public Methods.
+    public void DestroyMe()
+    {
+        Destroy(gameObject);
+    }
 
     #endregion Public Methods
 }
