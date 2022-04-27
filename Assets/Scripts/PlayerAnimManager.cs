@@ -5,29 +5,34 @@ using UnityEngine;
 public class PlayerAnimManager : MonoBehaviour
 {
     #region Variables
+
     // Variables.
-    Animator animator;
+    private Animator animator;
+
     private string currentState;
-    Vector3 prevPos;
-    #endregion
+    private Vector3 prevPos;
+
+    #endregion Variables
 
     #region Animation States
-    const string PLAYER_IDLE = "Idle";
-    const string PLAYER_RUN = "Run";
-    const string PLAYER_ACCEND = "Accending";
-    const string PLAYER_DECEND = "Decending";
-    const string PLAYER_DEAD = "Dead";
-    #endregion
+
+    private const string PLAYER_IDLE = "Idle";
+    private const string PLAYER_RUN = "Run";
+    private const string PLAYER_ACCEND = "Accending";
+    private const string PLAYER_DECEND = "Decending";
+    private const string PLAYER_DEAD = "Dead";
+
+    #endregion Animation States
 
     #region Unity Methods
 
-    void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
         ChangeAnimationState(PLAYER_IDLE);
     }
 
-    void Update()
+    private void Update()
     {
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
@@ -37,7 +42,7 @@ public class PlayerAnimManager : MonoBehaviour
         prevPos = transform.position;
     }
 
-    #endregion
+    #endregion Unity Methods
 
     #region Private Methods
 
@@ -89,5 +94,6 @@ public class PlayerAnimManager : MonoBehaviour
 
         currentState = newState;
     }
-    #endregion
+
+    #endregion Private Methods
 }
