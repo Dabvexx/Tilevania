@@ -758,9 +758,9 @@ TextureImporter:
       name: herochar_spritesheet(new)_36
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 128
-        width: 12
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -779,9 +779,9 @@ TextureImporter:
       name: herochar_spritesheet(new)_37
       rect:
         serializedVersion: 2
-        x: 18
+        x: 16
         y: 128
-        width: 11
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -800,9 +800,9 @@ TextureImporter:
       name: herochar_spritesheet(new)_38
       rect:
         serializedVersion: 2
-        x: 33
+        x: 32
         y: 128
-        width: 12
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -821,9 +821,9 @@ TextureImporter:
       name: herochar_spritesheet(new)_39
       rect:
         serializedVersion: 2
-        x: 2
+        x: 0
         y: 112
-        width: 12
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -842,9 +842,9 @@ TextureImporter:
       name: herochar_spritesheet(new)_40
       rect:
         serializedVersion: 2
-        x: 18
+        x: 16
         y: 112
-        width: 12
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -863,9 +863,9 @@ TextureImporter:
       name: herochar_spritesheet(new)_41
       rect:
         serializedVersion: 2
-        x: 35
+        x: 32
         y: 112
-        width: 11
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
