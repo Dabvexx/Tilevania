@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MushData))]
 public class MushAI : MonoBehaviour
 {
     #region Variables
@@ -15,6 +16,7 @@ public class MushAI : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float walkChance = 1f;
+    private MushData md;
 
     #endregion Variables
 
@@ -23,6 +25,7 @@ public class MushAI : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        md = GetComponent<MushData>();
     }
 
     private void Update()
@@ -57,6 +60,11 @@ public class MushAI : MonoBehaviour
 
             walkDirection = Random.Range(1, 21) > 10 ? -1 : 1;
         }
+    }
+
+    private void Hurt(int damage)
+    {
+        md.health -= damage;
     }
 
     private void DecrementTimer()
