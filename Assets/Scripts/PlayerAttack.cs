@@ -34,11 +34,13 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        facingDir = new Vector2(Mathf.Sign(Input.GetAxisRaw("Horizontal")), 0);
+        float input = Input.GetAxisRaw("Horizontal");
+        facingDir = input == 0 ? facingDir : GetFacingDirection(input);
 
         if (Input.GetButtonDown("Fire1"))
         {
             animator.Play("SwordSwing");
+            //animator.SetBool("isSwinging", true);
             MeleeTryHit();
         }
     }
@@ -76,6 +78,7 @@ public class PlayerAttack : MonoBehaviour
     public GameObject CastMeleeRayCast()
     {
         // Cast Raycast
+        Debug.Log(facingDir);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, facingDir, length, layerMask);
 
         //Debug.DrawRay(transform.position, Vector2.up * length, Color.red, length);
@@ -93,6 +96,16 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("Didn't hit");
             return null;
         }
+    }
+
+    public void EndSwing()
+    {
+        animator.SetBool("isSwinging", false);
+    }
+
+    private Vector2 GetFacingDirection(float input)
+    {
+        return new Vector2(Mathf.Sign(input), 0);
     }
 
     #endregion Public Methods
