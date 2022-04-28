@@ -91,6 +91,8 @@ public class MushAI : MonoBehaviour
         //    deathEvent();
         //}
 
+        GetComponent<BoxCollider2D>().enabled = false;
+
         isAlive = false;
     }
 

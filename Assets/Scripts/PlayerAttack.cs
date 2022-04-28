@@ -89,7 +89,7 @@ public class PlayerAttack : MonoBehaviour
         }
         else
         {
-            Debug.DrawRay(transform.position, facingDir * length, Color.white);
+            Debug.DrawRay(transform.position, facingDir * length, Color.blue);
             Debug.Log("Didn't hit");
             return null;
         }

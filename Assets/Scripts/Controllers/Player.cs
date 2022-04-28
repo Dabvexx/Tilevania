@@ -18,11 +18,11 @@ public class Player : MonoBehaviour
 
     public float wallSlideSpeedMax = 3;
     public float wallStickTime = .25f;
-    float timeToWallUnstick;
+    private float timeToWallUnstick;
 
     private float gravity;
-    float maxJumpVelocity;
-    float minJumpVelocity;
+    private float maxJumpVelocity;
+    private float minJumpVelocity;
 
     private Vector3 velocity;
     private float velocityXSmoothing;
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 
         bool wallSliding = false;
-        if((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
+        /*if((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
         {
             wallSliding = true;
 
@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
             {
                 timeToWallUnstick = wallStickTime;
             }
-        }
+        }*/
 
         if (Input.GetButtonDown("Jump"))
         {
