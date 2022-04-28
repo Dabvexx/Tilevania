@@ -45,6 +45,8 @@ public class PlayerAnimManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("Collided");
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
             isAlive = false;

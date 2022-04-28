@@ -81,7 +81,7 @@ public class MushAI : MonoBehaviour
         walkTimer -= Time.deltaTime;
     }
 
-    private void Die()
+    public void Die()
     {
         // Haha funni death event delegate.
         // A little too much tomfoolery.
